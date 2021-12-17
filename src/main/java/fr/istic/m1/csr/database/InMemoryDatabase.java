@@ -50,7 +50,6 @@ public class InMemoryDatabase {
         v.set_id(voyageurCount);
         this.voyageurs.put(voyageurCount, v);
         this.voyageurCount++;
-
         v.start();
 
         return v;

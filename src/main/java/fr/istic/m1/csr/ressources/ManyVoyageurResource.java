@@ -13,6 +13,9 @@ import org.restlet.resource.ServerResource;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Classe ressource pour la manipulation de plusieurs voyageurs
+ */
 public class ManyVoyageurResource extends ServerResource implements OurResource<Voyageur> {
 
     /** Backend. */
@@ -22,6 +25,12 @@ public class ManyVoyageurResource extends ServerResource implements OurResource<
         backend_ = (Backend) getApplication().getContext().getAttributes().get("backend");
     }
 
+    /**
+     * Permet de sauvegarder dans la BD et de démarrer plusieurs voyagers d'un coup
+     * @param representation le corps de la requete qui est un jsonArray
+     * @return L'ensemble des voyageurs ajoutés
+     * @throws JSONException
+     */
     @Override
     public Representation store(JsonRepresentation representation) throws JSONException {
 

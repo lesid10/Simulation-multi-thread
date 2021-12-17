@@ -15,6 +15,9 @@ import org.restlet.resource.ServerResource;
 import fr.istic.m1.csr.backend.Backend;
 import fr.istic.m1.csr.internals.Bus;
 
+/**
+ * Deuxiême classe ressource pour la manipulation des bus
+ */
 public class ManyBusResource extends ServerResource {
 
     /** Backend. */
@@ -24,8 +27,14 @@ public class ManyBusResource extends ServerResource {
         backend_ = (Backend) getApplication().getContext().getAttributes().get("backend");
     }
 
+
+    /**
+     * Donne l'etat de tous les bus
+     * @return le statut de tous les bus
+     * @throws JSONException
+     */
     @Get("json")
-    public Representation getAllBusState(JsonRepresentation representation) throws JSONException {
+    public Representation getAllBusState() throws JSONException {
 
         Collection<JSONObject> busStates = new ArrayList<JSONObject>();
 

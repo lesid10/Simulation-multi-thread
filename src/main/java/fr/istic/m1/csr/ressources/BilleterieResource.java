@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory;
 import fr.istic.m1.csr.backend.Backend;
 import fr.istic.m1.csr.internals.Billeterie;
 
+/**
+ * Classe ressource pour la manipulation de la billeterie
+ */
 public class BilleterieResource extends ServerResource {
 
     final static Logger log = LoggerFactory.getLogger(BilleterieResource.class);
@@ -23,6 +26,11 @@ public class BilleterieResource extends ServerResource {
         backend_ = (Backend) getApplication().getContext().getAttributes().get("backend");
     }
 
+    /**
+     * Retourne le nombre de billet acheté
+     * @return Nombre de billet acheté
+     * @throws JSONException
+     */
     @Get("json")
     public Representation getNumberOfTicket() throws JSONException {
 

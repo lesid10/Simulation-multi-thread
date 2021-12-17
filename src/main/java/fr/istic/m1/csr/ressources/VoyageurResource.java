@@ -17,6 +17,9 @@ import fr.istic.m1.csr.backend.Backend;
 import fr.istic.m1.csr.interfaces.OurResource;
 import fr.istic.m1.csr.internals.Voyageur;
 
+/**
+ * Classe ressource pour la manipulation de voyageurs
+ */
 public class VoyageurResource extends ServerResource implements OurResource<Voyageur> {
 
     /** Backend. */
@@ -26,6 +29,12 @@ public class VoyageurResource extends ServerResource implements OurResource<Voya
         backend_ = (Backend) getApplication().getContext().getAttributes().get("backend");
     }
 
+    /**
+     * Permet de retrouver l'etat d'un voyageur à partir de son id
+     * @param representation id
+     * @return un json comportant le nom et l'etat du voyageur
+     * @throws JSONException
+     */
     @Override
     public Representation retrieve(JsonRepresentation representation) throws JSONException {
 
@@ -44,6 +53,12 @@ public class VoyageurResource extends ServerResource implements OurResource<Voya
         return new JsonRepresentation(vObject);
     }
 
+    /**
+     * Permet d'enregistrer un voyageur dans la Bd et le demarrer
+     * @param representation corps de la requête
+     * @return un status
+     * @throws JSONException
+     */
     @Override
     public Representation store(JsonRepresentation representation) throws JSONException {
 
