@@ -1,5 +1,7 @@
 package fr.istic.m1.csr.internals;
 
+import java.time.Instant;
+
 import fr.istic.m1.csr.utils.EtatVoyageur;
 
 public class Voyageur extends Thread {
@@ -37,13 +39,14 @@ public class Voyageur extends Thread {
 	}
 
 	void acheterBillet() {
-		System.out.println("le thread " + Thread.currentThread().toString() + " achete un billet de bus");
+		System.out.println(
+				Instant.now() + " Le " + Thread.currentThread().toString() + " achete un billet de bus");
 		billeterie.vendre();
 		this.etat = EtatVoyageur.AVEC_BILLET;
 	}
 
 	void allerArret() {
-		System.out.println("le thread " + Thread.currentThread().toString() + " se rend a l arret en "
+		System.out.println(Instant.now() + " Le " + Thread.currentThread().toString() + " se rend a l arret en "
 				+ TEMPS_DEPLACEMENT + " ms");
 		try {
 			Thread.sleep(TEMPS_DEPLACEMENT);
@@ -53,8 +56,9 @@ public class Voyageur extends Thread {
 	}
 
 	void monterDansBus() {
-		System.out.println("le thread " + Thread.currentThread().toString() + " essaie de monter dans le bus");
-		arret.monter();
+		System.out.println(
+				Instant.now() + " Le " + Thread.currentThread().toString() + " essaie de monter dans le bus");
+		arret.monter(this);
 		// arret.monter(this);
 	}
 
@@ -69,7 +73,7 @@ public class Voyageur extends Thread {
 
 		monterDansBus();
 
-		System.out.println("Je suis monté dans le bus hein donc il faut changer mon état");
+		System.out.println(Instant.now() + " Je suis monté dans le bus hein donc il faut changer mon état");
 		// this.etat = EtatVoyageur.MONTE_DANS_UN_BUS;
 
 	}

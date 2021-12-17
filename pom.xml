@@ -100,6 +100,12 @@
 	    </dependency>
 
 		<dependency>
+			<groupId>org.restlet.jee</groupId>
+			<artifactId>org.restlet.ext.slf4j</artifactId>
+			<version>3.0-M1</version>
+		</dependency>
+
+		<dependency>
 		    <groupId>org.restlet.jse</groupId>
 		    <artifactId>org.restlet.ext.json</artifactId>
 		    <version>2.4.3</version>

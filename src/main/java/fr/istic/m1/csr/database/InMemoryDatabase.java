@@ -9,6 +9,7 @@ import fr.istic.m1.csr.internals.Arret;
 import fr.istic.m1.csr.internals.Billeterie;
 import fr.istic.m1.csr.internals.Bus;
 import fr.istic.m1.csr.internals.Voyageur;
+import fr.istic.m1.csr.utils.Utils;
 import fr.istic.m1.csr.utils.VoyageurException;
 
 /**
@@ -29,9 +30,11 @@ public class InMemoryDatabase {
 
     /** User Hashmap. */
     private Map<String, Voyageur> voyageurs;
+    private ThreadGroup tgV;
 
     /** Tweet Hashmap. */
     private Map<Integer, Bus> bus;
+    private ThreadGroup tgB;
 
     // private Bus[] bus = new Bus[NB_BUS];
 
@@ -45,6 +48,8 @@ public class InMemoryDatabase {
         this.arret = arret;
         this.voyageurCount = 0;
         this.busCount = 0;
+        this.tgV = new ThreadGroup(Utils.THREAD_GROUP_VOYAGEUR);
+        this.tgB = new ThreadGroup(Utils.THREAD_GROUP_BUS);
     }
 
     public synchronized Voyageur createVoyageur(int number) {
@@ -54,7 +59,6 @@ public class InMemoryDatabase {
         Voyageur v = new Voyageur(billeterie, arret, number);
         this.voyageurs.put(String.valueOf(number), v);
         this.voyageurCount++;
-        v.setPriority(Thread.MAX_PRIORITY);
 
         v.start();
 
@@ -81,10 +85,8 @@ public class InMemoryDatabase {
 
         for (int i = 0; i < NB_BUS; i++) {
 
-            bus.put(i, new Bus(this.arret, i));
+            bus.put(i, new Bus(tgB, String.valueOf(i), this.arret, i));
             bus.get(i).setDaemon(true);
-            // TODO à commenter
-            bus.get(i).setPriority(Thread.MIN_PRIORITY);
             bus.get(i).start();
 
             this.busCount++;

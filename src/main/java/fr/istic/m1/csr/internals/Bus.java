@@ -1,5 +1,7 @@
 package fr.istic.m1.csr.internals;
 
+import java.time.Instant;
+
 import fr.istic.m1.csr.utils.EtatBus;
 
 public class Bus extends Thread {
@@ -31,14 +33,18 @@ public class Bus extends Thread {
 	 * 
 	 * @param arret L'arret
 	 */
-	public Bus(Arret arret, int nb) {
+	public Bus(ThreadGroup tg, String tgName, Arret arret, int nb) {
+
+		super(tg, tgName);
+
 		this.arret = arret;
 		this.nb = nb;
 	}
 
 	void arriverBusArret() {
 		System.out.println(
-				"le thread " + Thread.currentThread().toString() + " est arrivé à l'arret et essai de se stationner");
+				Instant.now() + " le " + Thread.currentThread().toString()
+						+ " est arrivé à l'arret et essai de se stationner");
 		arret.stationner(this);
 	}
 
@@ -50,8 +56,8 @@ public class Bus extends Thread {
 	}
 
 	void voyager() {
-		System.out.println("le thread " + Thread.currentThread().toString() + " effectue un voyage de "
-				+ TEMPS_VOYAGES + "ms");
+		System.out.println(Instant.now() + " le " + Thread.currentThread().toString() + " effectue un voyage de "
+				+ TEMPS_VOYAGES + " ms");
 		try {
 			this.etat = EtatBus.EN_VOYAGE;
 			Thread.sleep(TEMPS_VOYAGES);
