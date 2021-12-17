@@ -7,9 +7,11 @@ public class Billeterie {
 	 */
 	private static int nbrBilletVendu = 0;
 
+	/**
+	 * Permet de vendre les billets aux voyageurs
+	 */
 	public synchronized void vendre() {
 		nbrBilletVendu++;
-		// System.out.println("Le nombre de billet vendu est: " + nbrBilletVendu);
 	}
 
 	public static int getNbrBilletVendu() {

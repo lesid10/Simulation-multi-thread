@@ -37,20 +37,16 @@ public class Bus extends Thread {
 	}
 
 	void arriverBusArret() {
-		// System.out.println("le bus " + Thread.currentThread().toString() + " est
-		// arrivé à l'arret et essai de se stationner");
 		arret.stationner(this);
 	}
 
 	void departBusArret() {
-		// System.out.println("le thread " + Thread.currentThread().toString() + "
-		// quitte l'arret");
+
 		arret.depart();
 	}
 
 	void voyager() {
-		// System.out.println("le thread " + Thread.currentThread().toString() + "
-		// effectue un voyage de " + TEMPS_VOYAGES + "ms");
+
 		try {
 			this.etat = EtatBus.EN_VOYAGE;
 			Thread.sleep(TEMPS_VOYAGES);

@@ -34,15 +34,11 @@ public class Arret {
 
 	}
 
+
 	public synchronized void monter(Voyageur voyageur) {
-		// System.out.println(new StringBuilder().append("1) Le voyageur :
-		// ").append(Thread.currentThread().toString()).append(" dans le
-		// ").append(this.nbBus).append(" busPresent:
-		// ").append(this.busPresent).toString());
 
 		while (!this.busPresent || nbrPlaceOccupee >= Bus.NBRE_PLACE_LIMITE) {
-			// System.out.println("Le voyageur : " + Thread.currentThread().toString() + "
-			// part dormir " + this.busPresent);
+
 			try {
 				wait();
 			} catch (InterruptedException e) {
@@ -51,9 +47,7 @@ public class Arret {
 			}
 
 		}
-		// v.setEtat(EtatVoyageur.MONTE_DANS_UN_BUS);
 		System.out.println("Le voyageur " + voyageur.getVoyageurName() + " est monté dans le bus.");
-		/* Occuper les places du bus */
 		this.nbrPlaceOccupee++;
 	}
 
@@ -65,7 +59,6 @@ public class Arret {
 		this.nbrPlaceOccupee = 0;
 		this.busPresent = false;
 		this.busIsPass = true;
-		// notifyAll();
 
 	}
 
