@@ -1,14 +1,12 @@
 package fr.istic.m1.csr.internals;
 
 import fr.istic.m1.csr.utils.EtatBus;
-import fr.istic.m1.csr.utils.EtatVoyageur;
 
 public class Arret {
 
 	private boolean busPresent = false;
 	private boolean busIsPass = false;
 	private int nbrPlaceOccupee = 0;
-	private String nbBus = "";
 
 	public synchronized void stationner(Bus bus) {
 
@@ -21,7 +19,6 @@ public class Arret {
 		}
 
 		this.busPresent = true;
-		this.nbBus = Thread.currentThread().toString();
 
 		System.out.println("Le bus " + Thread.currentThread().toString() + " est stationné.");
 
@@ -38,10 +35,14 @@ public class Arret {
 	}
 
 	public synchronized void monter(Voyageur voyageur) {
-		//System.out.println(new StringBuilder().append("1) Le voyageur  : ").append(Thread.currentThread().toString()).append(" dans le ").append(this.nbBus).append(" busPresent: ").append(this.busPresent).toString());
+		// System.out.println(new StringBuilder().append("1) Le voyageur :
+		// ").append(Thread.currentThread().toString()).append(" dans le
+		// ").append(this.nbBus).append(" busPresent:
+		// ").append(this.busPresent).toString());
 
 		while (!this.busPresent || nbrPlaceOccupee >= Bus.NBRE_PLACE_LIMITE) {
-			//System.out.println("Le voyageur : " + Thread.currentThread().toString() + "  part dormir " + this.busPresent);
+			// System.out.println("Le voyageur : " + Thread.currentThread().toString() + "
+			// part dormir " + this.busPresent);
 			try {
 				wait();
 			} catch (InterruptedException e) {
@@ -58,7 +59,8 @@ public class Arret {
 
 	public synchronized void depart() {
 
-		System.out.println("Le bus : " + Thread.currentThread().toString() + " quitte l'arrêt avec à son bord " + this.nbrPlaceOccupee + " passager(s).");
+		System.out.println("Le bus : " + Thread.currentThread().toString() + " quitte l'arrêt avec à son bord "
+				+ this.nbrPlaceOccupee + " passager(s).");
 
 		this.nbrPlaceOccupee = 0;
 		this.busPresent = false;

@@ -14,7 +14,7 @@ public class Voyageur extends Thread {
 	 */
 	private Billeterie billeterie;
 	private String vName;
-	private int _id;
+	private int id;
 
 	/*
 	 * L'arret
@@ -43,7 +43,8 @@ public class Voyageur extends Thread {
 	}
 
 	void allerArret() {
-		//System.out.println("le thread " + Thread.currentThread().toString() + " se rend a l arret en " + TEMPS_DEPLACEMENT + " ms");
+		// System.out.println("le thread " + Thread.currentThread().toString() + " se
+		// rend a l arret en " + TEMPS_DEPLACEMENT + " ms");
 		try {
 			Thread.sleep(TEMPS_DEPLACEMENT);
 		} catch (InterruptedException e) {
@@ -52,7 +53,8 @@ public class Voyageur extends Thread {
 	}
 
 	void monterDansBus() {
-		//System.out.println("le thread " + Thread.currentThread().toString() + " essaie de monter dans le bus");
+		// System.out.println("le thread " + Thread.currentThread().toString() + "
+		// essaie de monter dans le bus");
 		arret.monter(this);
 		// arret.monter(this);
 	}
@@ -64,7 +66,8 @@ public class Voyageur extends Thread {
 		allerArret();
 		monterDansBus();
 
-		//System.out.println("Je suis monté dans le bus hein donc il faut changer mon état");
+		// System.out.println("Je suis monté dans le bus hein donc il faut changer mon
+		// état");
 		// this.etat = EtatVoyageur.MONTE_DANS_UN_BUS;
 	}
 
@@ -81,11 +84,11 @@ public class Voyageur extends Thread {
 	}
 
 	public int get_id() {
-		return _id;
+		return id;
 	}
 
-	public void set_id(int _id) {
-		this._id = _id;
+	public void set_id(int id) {
+		this.id = id;
 	}
 
 	@Override

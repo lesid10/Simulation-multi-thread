@@ -37,7 +37,8 @@ public class Bus extends Thread {
 	}
 
 	void arriverBusArret() {
-		//System.out.println("le bus " + Thread.currentThread().toString() + " est arrivé à l'arret et essai de se stationner");
+		// System.out.println("le bus " + Thread.currentThread().toString() + " est
+		// arrivé à l'arret et essai de se stationner");
 		arret.stationner(this);
 	}
 
@@ -48,19 +49,19 @@ public class Bus extends Thread {
 	}
 
 	void voyager() {
-		//System.out.println("le thread " + Thread.currentThread().toString() + " effectue un voyage de " + TEMPS_VOYAGES + "ms");
+		// System.out.println("le thread " + Thread.currentThread().toString() + "
+		// effectue un voyage de " + TEMPS_VOYAGES + "ms");
 		try {
 			this.etat = EtatBus.EN_VOYAGE;
 			Thread.sleep(TEMPS_VOYAGES);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void run() {
-		System.out.println("Nouveau bus démarré "+ currentThread().toString() + ".");
+		System.out.println("Nouveau bus démarré " + currentThread().toString() + ".");
 		while (true) {
 			arriverBusArret();
 			departBusArret();
@@ -74,6 +75,10 @@ public class Bus extends Thread {
 
 	public void setEtat(EtatBus etat) {
 		this.etat = etat;
+	}
+
+	public int getNb() {
+		return nb;
 	}
 
 	@Override

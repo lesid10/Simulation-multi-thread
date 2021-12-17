@@ -1,5 +1,6 @@
 package fr.istic.m1.csr.database;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,10 +50,9 @@ public class InMemoryDatabase {
         v.set_id(voyageurCount);
         this.voyageurs.put(voyageurCount, v);
         this.voyageurCount++;
-      //  v.setPriority(Thread.MAX_PRIORITY);
 
         v.start();
-        //System.out.println("Voyageur " + name + " ajouté");
+
         return v;
     }
 
@@ -64,16 +64,24 @@ public class InMemoryDatabase {
         return this.voyageurs;
     }
 
+    public Bus getBus(int id) {
+        return this.bus.get(id);
+    }
+
+    public Collection<Bus> getAllBusState() {
+        return this.bus.values();
+    }
+
     private synchronized void addNewBus() {
-        //System.out.println("Création des bus");
+        // System.out.println("Création des bus");
         Bus b = new Bus(this.arret, busCount);
         bus.put(busCount, b);
         b.setDaemon(true);
         // TODO à commenter
-        //b.setPriority(Thread.MIN_PRIORITY);
+        // b.setPriority(Thread.MIN_PRIORITY);
         b.start();
         this.busCount++;
-        //System.out.println("Fin creation des bus: " + this.busCount);
+        // System.out.println("Fin creation des bus: " + this.busCount);
     }
 
     public synchronized void addAllBus() {

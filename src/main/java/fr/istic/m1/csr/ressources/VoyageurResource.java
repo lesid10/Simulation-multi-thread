@@ -35,6 +35,8 @@ public class VoyageurResource extends ServerResource implements OurResource<Voya
 
         Voyageur v = this.backend_.getDatabase().getVoyageur(Integer.parseInt(voyageurId));
 
+        System.out.println("Voyageur: " + v);
+
         JSONObject vObject = new JSONObject();
         vObject.put("Nom", v.getVoyageurName());
         vObject.put("etat", v.getEtat());

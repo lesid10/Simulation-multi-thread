@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
-import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
 import fr.istic.m1.csr.backend.Backend;
@@ -27,12 +26,15 @@ public class BusResource extends ServerResource {
 
     @Get("json")
     public Representation getBusState(JsonRepresentation representation) throws JSONException {
-        String userId = (String) getRequest().getAttributes().get("userId");
-        Collection<JSONObject> jsonTweets = new ArrayList<JSONObject>();
+        String busId = (String) getRequest().getAttributes().get("busId");
 
-        JSONArray jsonArray = new JSONArray(jsonTweets);
+        Bus b = this.backend_.getDatabase().getBus(Integer.parseInt(busId));
 
-        return new JsonRepresentation(jsonArray);
+        JSONObject vObject = new JSONObject();
+        vObject.put("id", b.getNb());
+        vObject.put("etat", b.getEtat());
+
+        return new JsonRepresentation(vObject);
     }
 
 }
