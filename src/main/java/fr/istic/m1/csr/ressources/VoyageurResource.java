@@ -33,10 +33,10 @@ public class VoyageurResource extends ServerResource implements OurResource<Voya
 
         System.out.println("Voyageur store: " + voyageurId);
 
-        Voyageur v = this.backend_.getDatabase().getVoyageur(voyageurId);
+        Voyageur v = this.backend_.getDatabase().getVoyageur(Integer.parseInt(voyageurId));
 
         JSONObject vObject = new JSONObject();
-        vObject.put("id", v.getNb());
+        vObject.put("Nom", v.getVoyageurName());
         vObject.put("etat", v.getEtat());
 
         return new JsonRepresentation(vObject);
@@ -46,11 +46,11 @@ public class VoyageurResource extends ServerResource implements OurResource<Voya
     public Representation store(JsonRepresentation representation) throws JSONException {
 
         JSONObject object = representation.getJsonObject();
-        Integer voyageurId = object.getInt("voyageur_id");
+        String nom = object.getString("name");
 
         // System.out.println("Voyageur store: " + voyageurId);
 
-        this.backend_.getDatabase().createVoyageur(voyageurId);
+        this.backend_.getDatabase().createVoyageur(nom);
 
         JSONObject res = new JSONObject();
         res.put("add", true);

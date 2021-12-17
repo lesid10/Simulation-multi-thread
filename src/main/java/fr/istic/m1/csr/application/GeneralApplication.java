@@ -1,5 +1,6 @@
 package fr.istic.m1.csr.application;
 
+import fr.istic.m1.csr.ressources.ManyVoyageurResource;
 import org.restlet.Application;
 import org.restlet.Context;
 import org.restlet.Restlet;
@@ -30,8 +31,11 @@ public class GeneralApplication extends Application {
         Router router = new Router(getContext());
         router.attach("/bus/state", BusResource.class);
         router.attach("/bus/start", BusResource.class);
+
         router.attach("/voyageur/add", VoyageurResource.class);
+        router.attach("/voyageur/addAll", ManyVoyageurResource.class);
         router.attach("/voyageur/state/{voyageurId}", VoyageurResource.class);
+
         router.attach("/billeterie/numberOfTickets", BilleterieResource.class);
 
         return router;

@@ -13,7 +13,8 @@ public class Voyageur extends Thread {
 	 * La billeterie
 	 */
 	private Billeterie billeterie;
-	private int nb;
+	private String vName;
+	private int _id;
 
 	/*
 	 * L'arret
@@ -28,11 +29,10 @@ public class Voyageur extends Thread {
 	 * @param billeterie La billeterie
 	 * @param arret      L'arret
 	 */
-	public Voyageur(Billeterie billeterie, Arret arret, int nb) {
-
+	public Voyageur(Billeterie billeterie, Arret arret, String nom) {
 		this.billeterie = billeterie;
 		this.arret = arret;
-		this.nb = nb;
+		this.vName = nom;
 		this.etat = EtatVoyageur.SANS_BILLET;
 	}
 
@@ -43,8 +43,7 @@ public class Voyageur extends Thread {
 	}
 
 	void allerArret() {
-		System.out.println("le thread " + Thread.currentThread().toString() + " se rend a l arret en "
-				+ TEMPS_DEPLACEMENT + " ms");
+		//System.out.println("le thread " + Thread.currentThread().toString() + " se rend a l arret en " + TEMPS_DEPLACEMENT + " ms");
 		try {
 			Thread.sleep(TEMPS_DEPLACEMENT);
 		} catch (InterruptedException e) {
@@ -53,25 +52,20 @@ public class Voyageur extends Thread {
 	}
 
 	void monterDansBus() {
-		System.out.println("le thread " + Thread.currentThread().toString() + " essaie de monter dans le bus");
-		arret.monter();
+		//System.out.println("le thread " + Thread.currentThread().toString() + " essaie de monter dans le bus");
+		arret.monter(this);
 		// arret.monter(this);
 	}
 
 	@Override
 	public void run() {
-
 		// System.out.println("Le run des voyageurs est lancé");
-
 		acheterBillet();
-
 		allerArret();
-
 		monterDansBus();
 
-		System.out.println("Je suis monté dans le bus hein donc il faut changer mon état");
+		//System.out.println("Je suis monté dans le bus hein donc il faut changer mon état");
 		// this.etat = EtatVoyageur.MONTE_DANS_UN_BUS;
-
 	}
 
 	public EtatVoyageur getEtat() {
@@ -82,13 +76,21 @@ public class Voyageur extends Thread {
 		this.etat = etat;
 	}
 
-	public int getNb() {
-		return nb;
+	public String getVoyageurName() {
+		return vName;
+	}
+
+	public int get_id() {
+		return _id;
+	}
+
+	public void set_id(int _id) {
+		this._id = _id;
 	}
 
 	@Override
 	public String toString() {
-		return "Voyageur " + nb;
+		return "Voyageur " + vName;
 	}
 
 }

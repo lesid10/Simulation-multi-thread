@@ -3,13 +3,10 @@ package fr.istic.m1.csr.database;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.restlet.data.Status;
-
 import fr.istic.m1.csr.internals.Arret;
 import fr.istic.m1.csr.internals.Billeterie;
 import fr.istic.m1.csr.internals.Bus;
 import fr.istic.m1.csr.internals.Voyageur;
-import fr.istic.m1.csr.utils.VoyageurException;
 
 /**
  *
@@ -21,14 +18,14 @@ import fr.istic.m1.csr.utils.VoyageurException;
  */
 public class InMemoryDatabase {
 
-    static int NB_BUS = 15;
+    static int NB_BUS = 5;
 
     private Arret arret;
 
     private Billeterie billeterie;
 
     /** User Hashmap. */
-    private Map<String, Voyageur> voyageurs;
+    private Map<Integer, Voyageur> voyageurs;
 
     /** Tweet Hashmap. */
     private Map<Integer, Bus> bus;
@@ -39,7 +36,7 @@ public class InMemoryDatabase {
     private Integer busCount;
 
     public InMemoryDatabase(Billeterie billeterie, Arret arret) {
-        this.voyageurs = new HashMap<String, Voyageur>();
+        this.voyageurs = new HashMap<Integer, Voyageur>();
         this.bus = new HashMap<Integer, Bus>();
         this.billeterie = billeterie;
         this.arret = arret;
@@ -47,52 +44,42 @@ public class InMemoryDatabase {
         this.busCount = 0;
     }
 
-    public synchronized Voyageur createVoyageur(int number) {
-        // if (number <= this.voyageurCount) {
-        // throw new VoyageurException("Ce voyageur existe déjà", null);
-        // }
-        Voyageur v = new Voyageur(billeterie, arret, number);
-        this.voyageurs.put(String.valueOf(number), v);
+    public synchronized Voyageur createVoyageur(String name) {
+        Voyageur v = new Voyageur(billeterie, arret, name);
+        v.set_id(voyageurCount);
+        this.voyageurs.put(voyageurCount, v);
         this.voyageurCount++;
-        v.setPriority(Thread.MAX_PRIORITY);
+      //  v.setPriority(Thread.MAX_PRIORITY);
 
         v.start();
-
-        System.out.println("Voyageur " + number + " crée");
+        //System.out.println("Voyageur " + name + " ajouté");
         return v;
     }
 
-    public Voyageur getVoyageur(String id) {
+    public Voyageur getVoyageur(int id) {
         return this.voyageurs.get(id);
     }
 
-    public Map<String, Voyageur> getAllVoyageurs() {
-
+    public Map<Integer, Voyageur> getAllVoyageurs() {
         return this.voyageurs;
     }
 
-    public synchronized Map<Integer, Bus> createBus() {
-        // Bus b = new Bus(this.arret, number);
-        // this.busCount++;
+    private synchronized void addNewBus() {
+        //System.out.println("Création des bus");
+        Bus b = new Bus(this.arret, busCount);
+        bus.put(busCount, b);
+        b.setDaemon(true);
+        // TODO à commenter
+        //b.setPriority(Thread.MIN_PRIORITY);
+        b.start();
+        this.busCount++;
+        //System.out.println("Fin creation des bus: " + this.busCount);
+    }
 
-        System.out.println("Création des bus");
-
-        this.arret = new Arret();
-
+    public synchronized void addAllBus() {
         for (int i = 0; i < NB_BUS; i++) {
-
-            bus.put(i, new Bus(this.arret, i));
-            bus.get(i).setDaemon(true);
-            // TODO à commenter
-            bus.get(i).setPriority(Thread.MIN_PRIORITY);
-            bus.get(i).start();
-
-            this.busCount++;
+            addNewBus();
         }
-
-        System.out.println("Fin création des bus: " + this.busCount);
-
-        return bus;
     }
 
 }

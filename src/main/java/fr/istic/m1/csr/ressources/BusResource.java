@@ -35,16 +35,4 @@ public class BusResource extends ServerResource {
         return new JsonRepresentation(jsonArray);
     }
 
-    @Post("json")
-    public Representation startBus() throws JSONException {
-
-        // Collection<JSONObject> jsonBus = new ArrayList<JSONObject>();
-
-        // JSONArray jsonArray = new JSONArray(jsonBus);
-
-        backend_.getDatabase().createBus();
-
-        return new JsonRepresentation(new JSONObject());
-    }
-
 }

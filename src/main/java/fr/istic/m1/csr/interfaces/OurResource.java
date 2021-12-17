@@ -18,7 +18,7 @@ public interface OurResource<T> {
     @Post
     public default Representation store(JsonRepresentation representation) throws JSONException {
         return null;
-    };
+    }
 
     @Put
     public default Representation replace(JsonRepresentation representation) throws JSONException {

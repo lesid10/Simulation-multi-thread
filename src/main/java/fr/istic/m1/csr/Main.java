@@ -42,8 +42,11 @@ public final class Main {
         Backend backend = new Backend();
         context.getAttributes().put("backend", backend);
         component.getDefaultHost().attach(application);
-        component.handle(new Request(Method.POST, new Reference("http://localhost:8124/bus/start")));
 
+        //Ajout de tous les bus
+        backend.getDatabase().addAllBus();
+
+        //component.handle(new Request(Method.POST, new Reference("http://localhost:8124/bus/start")));
         // Start the component
         component.start();
     }

@@ -13,7 +13,6 @@ public class Arret {
 	public synchronized void stationner(Bus bus) {
 
 		while (busPresent) {
-
 			try {
 				wait();
 			} catch (InterruptedException e) {
@@ -22,11 +21,9 @@ public class Arret {
 		}
 
 		this.busPresent = true;
-
 		this.nbBus = Thread.currentThread().toString();
 
-		System.out.println("Le bus stationné est: " + Thread.currentThread().toString() + " et attend pendant "
-				+ Bus.TEMPS_STATIONNEMENT + " à l arret " + this.busPresent);
+		System.out.println("Le bus " + Thread.currentThread().toString() + " est stationné.");
 
 		try {
 			if (busIsPass) {
@@ -40,16 +37,11 @@ public class Arret {
 
 	}
 
-	public synchronized void monter() {
-
-		System.out.println(
-				"1) Le voyageur  : " + Thread.currentThread().toString() + " dans le " + this.nbBus + " busPresent: "
-						+ this.busPresent);
+	public synchronized void monter(Voyageur voyageur) {
+		//System.out.println(new StringBuilder().append("1) Le voyageur  : ").append(Thread.currentThread().toString()).append(" dans le ").append(this.nbBus).append(" busPresent: ").append(this.busPresent).toString());
 
 		while (!this.busPresent || nbrPlaceOccupee >= Bus.NBRE_PLACE_LIMITE) {
-
-			System.out.println("2) Le voyageur : " + Thread.currentThread().toString() + "  part dormir "
-					+ this.busPresent);
+			//System.out.println("Le voyageur : " + Thread.currentThread().toString() + "  part dormir " + this.busPresent);
 			try {
 				wait();
 			} catch (InterruptedException e) {
@@ -58,18 +50,15 @@ public class Arret {
 			}
 
 		}
-
 		// v.setEtat(EtatVoyageur.MONTE_DANS_UN_BUS);
-		System.out.println("J'ai pu monter dans le bus");
+		System.out.println("Le voyageur " + voyageur.getVoyageurName() + " est monté dans le bus.");
 		/* Occuper les places du bus */
 		this.nbrPlaceOccupee++;
-
 	}
 
 	public synchronized void depart() {
 
-		System.out.println("Le bus : " + Thread.currentThread().toString() + " quitte l'arrêt avec à son bord "
-				+ this.nbrPlaceOccupee + " passager");
+		System.out.println("Le bus : " + Thread.currentThread().toString() + " quitte l'arrêt avec à son bord " + this.nbrPlaceOccupee + " passager(s).");
 
 		this.nbrPlaceOccupee = 0;
 		this.busPresent = false;

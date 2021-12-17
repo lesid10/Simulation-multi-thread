@@ -12,7 +12,7 @@ public class Bus extends Thread {
 	/**
 	 * Temps de stationnement du bus à l'arret en ms
 	 */
-	static int TEMPS_STATIONNEMENT = 5_000;
+	static int TEMPS_STATIONNEMENT = 10000;
 
 	/**
 	 * Temps de stationnement du bus à l'arret en ms
@@ -37,8 +37,7 @@ public class Bus extends Thread {
 	}
 
 	void arriverBusArret() {
-		System.out.println(
-				"le thread " + Thread.currentThread().toString() + " est arrivé à l'arret et essai de se stationner");
+		//System.out.println("le bus " + Thread.currentThread().toString() + " est arrivé à l'arret et essai de se stationner");
 		arret.stationner(this);
 	}
 
@@ -46,12 +45,10 @@ public class Bus extends Thread {
 		// System.out.println("le thread " + Thread.currentThread().toString() + "
 		// quitte l'arret");
 		arret.depart();
-
 	}
 
 	void voyager() {
-		System.out.println("le thread " + Thread.currentThread().toString() + " effectue un voyage de "
-				+ TEMPS_VOYAGES + "ms");
+		//System.out.println("le thread " + Thread.currentThread().toString() + " effectue un voyage de " + TEMPS_VOYAGES + "ms");
 		try {
 			this.etat = EtatBus.EN_VOYAGE;
 			Thread.sleep(TEMPS_VOYAGES);
@@ -63,17 +60,12 @@ public class Bus extends Thread {
 
 	@Override
 	public void run() {
-
-		System.out.println("Le run des Bus est lancé");
-
+		System.out.println("Nouveau bus démarré "+ currentThread().toString() + ".");
 		while (true) {
 			arriverBusArret();
-
 			departBusArret();
-
 			voyager();
 		}
-
 	}
 
 	public EtatBus getEtat() {
