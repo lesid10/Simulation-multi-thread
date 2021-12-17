@@ -37,7 +37,7 @@ public class Voyageur extends Thread {
 	}
 
 	void acheterBillet() {
-		System.out.println("le thread " + Thread.currentThread().toString() + " achete un billet de bus");
+		System.out.println("le thread " + Thread.currentThread().toString() + " achète un billet de bus");
 		billeterie.vendre();
 		this.etat = EtatVoyageur.AVEC_BILLET;
 	}
