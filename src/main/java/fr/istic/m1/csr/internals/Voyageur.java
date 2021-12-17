@@ -53,14 +53,15 @@ public class Voyageur extends Thread {
 	}
 
 	void monterDansBus() {
-		System.out.println("le thread " + Thread.currentThread().toString() + " monte dans le bus");
+		System.out.println("le thread " + Thread.currentThread().toString() + " essaie de monter dans le bus");
 		arret.monter();
+		// arret.monter(this);
 	}
 
 	@Override
 	public void run() {
 
-		System.out.println("Le run des voyageurs est lancé");
+		// System.out.println("Le run des voyageurs est lancé");
 
 		acheterBillet();
 
@@ -69,8 +70,20 @@ public class Voyageur extends Thread {
 		monterDansBus();
 
 		System.out.println("Je suis monté dans le bus hein donc il faut changer mon état");
-		this.etat = EtatVoyageur.MONTE_DANS_UN_BUS;
+		// this.etat = EtatVoyageur.MONTE_DANS_UN_BUS;
 
+	}
+
+	public EtatVoyageur getEtat() {
+		return etat;
+	}
+
+	public void setEtat(EtatVoyageur etat) {
+		this.etat = etat;
+	}
+
+	public int getNb() {
+		return nb;
 	}
 
 	@Override

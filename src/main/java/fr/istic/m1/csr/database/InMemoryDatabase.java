@@ -3,10 +3,13 @@ package fr.istic.m1.csr.database;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.restlet.data.Status;
+
 import fr.istic.m1.csr.internals.Arret;
 import fr.istic.m1.csr.internals.Billeterie;
 import fr.istic.m1.csr.internals.Bus;
 import fr.istic.m1.csr.internals.Voyageur;
+import fr.istic.m1.csr.utils.VoyageurException;
 
 /**
  *
@@ -18,14 +21,14 @@ import fr.istic.m1.csr.internals.Voyageur;
  */
 public class InMemoryDatabase {
 
-    static int NB_BUS = 10;
+    static int NB_BUS = 15;
 
     private Arret arret;
 
     private Billeterie billeterie;
 
     /** User Hashmap. */
-    private Map<Integer, Voyageur> voyageurs;
+    private Map<String, Voyageur> voyageurs;
 
     /** Tweet Hashmap. */
     private Map<Integer, Bus> bus;
@@ -36,7 +39,7 @@ public class InMemoryDatabase {
     private Integer busCount;
 
     public InMemoryDatabase(Billeterie billeterie, Arret arret) {
-        this.voyageurs = new HashMap<Integer, Voyageur>();
+        this.voyageurs = new HashMap<String, Voyageur>();
         this.bus = new HashMap<Integer, Bus>();
         this.billeterie = billeterie;
         this.arret = arret;
@@ -45,12 +48,25 @@ public class InMemoryDatabase {
     }
 
     public synchronized Voyageur createVoyageur(int number) {
+        // if (number <= this.voyageurCount) {
+        // throw new VoyageurException("Ce voyageur existe déjà", null);
+        // }
         Voyageur v = new Voyageur(billeterie, arret, number);
+        this.voyageurs.put(String.valueOf(number), v);
         this.voyageurCount++;
+        v.setPriority(Thread.MAX_PRIORITY);
+
+        v.start();
+
+        System.out.println("Voyageur " + number + " crée");
         return v;
     }
 
-    public Map<Integer, Voyageur> getAllVoyageurs() {
+    public Voyageur getVoyageur(String id) {
+        return this.voyageurs.get(id);
+    }
+
+    public Map<String, Voyageur> getAllVoyageurs() {
 
         return this.voyageurs;
     }
@@ -67,6 +83,8 @@ public class InMemoryDatabase {
 
             bus.put(i, new Bus(this.arret, i));
             bus.get(i).setDaemon(true);
+            // TODO à commenter
+            bus.get(i).setPriority(Thread.MIN_PRIORITY);
             bus.get(i).start();
 
             this.busCount++;

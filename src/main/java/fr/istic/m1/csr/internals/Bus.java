@@ -10,9 +10,15 @@ public class Bus extends Thread {
 	static int NBRE_PLACE_LIMITE = 15;
 
 	/**
-	 * Temps de stationnement du bus � l'arret en ms
+	 * Temps de stationnement du bus à l'arret en ms
 	 */
-	static int TEMPS_STATIONNEMENT = 2000;
+	static int TEMPS_STATIONNEMENT = 5_000;
+
+	/**
+	 * Temps de stationnement du bus à l'arret en ms
+	 */
+	int TEMPS_VOYAGES = 15_000;
+
 	/*
 	 * L'arret
 	 */
@@ -32,22 +38,23 @@ public class Bus extends Thread {
 
 	void arriverBusArret() {
 		System.out.println(
-				"le thread " + Thread.currentThread().toString() + " est arrivé à l'arret et essai de ce stationne");
+				"le thread " + Thread.currentThread().toString() + " est arrivé à l'arret et essai de se stationner");
 		arret.stationner(this);
-
 	}
 
 	void departBusArret() {
-		System.out.println("le thread " + Thread.currentThread().toString() + " quitte l'arret");
+		// System.out.println("le thread " + Thread.currentThread().toString() + "
+		// quitte l'arret");
 		arret.depart();
 
 	}
 
 	void voyager() {
-		System.out.println("le thread Bus " + Thread.currentThread().toString() + " effectue un voyage de 4000 ms");
-		this.etat = EtatBus.EN_VOYAGE;
+		System.out.println("le thread " + Thread.currentThread().toString() + " effectue un voyage de "
+				+ TEMPS_VOYAGES + "ms");
 		try {
-			Thread.sleep(4000);
+			this.etat = EtatBus.EN_VOYAGE;
+			Thread.sleep(TEMPS_VOYAGES);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
